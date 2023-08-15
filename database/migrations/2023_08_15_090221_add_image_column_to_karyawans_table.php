@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('karyawans', function (Blueprint $table) {
-            $table->timestamp('deleted_at')->nullable();
+            $table->string('image', 255)->nullable()->after('no_tlp');
         });
     }
 
@@ -26,7 +26,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('karyawans', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+            if (Schema::hasColumn('karyawans', 'image')) {
+                $table->dropColumn('image');
+            }
         });
     }
 };

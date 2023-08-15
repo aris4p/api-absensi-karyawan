@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JabatanResource;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,13 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        //
+        $jabatan = Jabatan::query()->get();
+
+        return response()->json([
+            "status" => true,
+            "message" => "data berhasil didapatkan",
+            "data" => JabatanResource::collection($jabatan)
+        ]);
     }
 
     /**
@@ -22,9 +29,8 @@ class JabatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
     }
 
     /**
@@ -35,7 +41,24 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jabatan' => 'required'
+        ],[
+            'jabatan.required' => "Nama jabatan Wajib Diisi"
+        ]);
+
+        $data = [
+            'jabatan' => $request->jabatan
+        ];
+
+        $jabatan = Jabatan::create($data);
+
+        return response()->json([
+            "status" => true,
+            "message" => "data berhasil didapatkan",
+            "data" => new JabatanResource($jabatan)
+        ]);
+
     }
 
     /**
@@ -44,9 +67,16 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function show(Jabatan $jabatan)
+    public function show($id)
     {
-        //
+
+        $jabatan = Jabatan::find($id);
+
+        return response()->json([
+            "status" => true,
+            "message" => "data berhasil didapatkan",
+            "data" => new JabatanResource($jabatan)
+        ]);
     }
 
     /**
@@ -67,9 +97,31 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jabatan $jabatan)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $request->validate([
+            'jabatan' => 'required'
+        ],[
+            'jabatan.required' => "Nama jabatan Wajib Diisi"
+        ]);
+
+        $data = [
+            'jabatan' => $request->jabatan
+        ];
+
+        $jabatan = Jabatan::find($id);
+        $jabatan->update($data);
+
+        return response()->json([
+            "status" => true,
+            "message" => "data berhasil didapatkan",
+            "data" => new JabatanResource($jabatan)
+        ]);
+
+
+
     }
 
     /**
@@ -78,8 +130,16 @@ class JabatanController extends Controller
      * @param  \App\Models\Jabatan  $jabatan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jabatan $jabatan)
+    public function destroy($id)
     {
-        //
+            $jabatan = Jabatan::findOrFail($id);
+            $jabatan->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Berhasil Dihapus',
+                'data' =>  new JabatanResource($jabatan)
+
+            ]);
     }
 }

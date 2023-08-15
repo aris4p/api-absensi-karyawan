@@ -19,6 +19,7 @@ class Karyawan extends Model
         'jenis_kelamin',
         'alamat',
         'no_tlp',
+        'image',
         'jabatan_id',
         'status',
     ];

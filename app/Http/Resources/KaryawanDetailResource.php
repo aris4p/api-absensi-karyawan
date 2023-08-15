@@ -17,6 +17,7 @@ class KaryawanDetailResource extends JsonResource
         $tgl = $this->tgl_lahir;
         $tgl_lahir = date('d F Y', strtotime($tgl));
 
+
         return [
             'id' => $this->id,
             'nama_karyawan' => $this->nama_karyawan,
@@ -24,6 +25,7 @@ class KaryawanDetailResource extends JsonResource
             'jenis_kelamin' => $this->jenis_kelamin,
             'alamat' => $this->alamat,
             'no_tlp' => $this->no_tlp,
+            'image' => $this->image,
             'status' => $this->status,
             'jabatan_id' => $this->jabatan_id,
             'jabatan' => $this->whenLoaded('jabatan'),
