@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
             $table->string('karyawan_id');
-            $table->string('tgl');
+            $table->timestamps();
         });
     }
 

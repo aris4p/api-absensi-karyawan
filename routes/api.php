@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\JabatanController;
 use Illuminate\Http\Request;
@@ -26,9 +27,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/jabatan/{id}', [JabatanController::class, 'update']);
     Route::delete('/jabatan/{id}', [JabatanController::class, 'destroy']);
 
-
+    //absensi
+    Route::get('/absensi', [AbsensiController::class, 'index']);
+    Route::post('/absensi', [AbsensiController::class, 'store']);
+    Route::patch('/absensi', [AbsensiController::class, 'update']);
 
     Route::get('logout', [AuthenticationController::class, 'logout']);
 
 
 });
+

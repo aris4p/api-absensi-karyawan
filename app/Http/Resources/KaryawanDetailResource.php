@@ -20,6 +20,7 @@ class KaryawanDetailResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'id_pegawai' => $this->id_pegawai,
             'nama_karyawan' => $this->nama_karyawan,
             'tgl_lahir' => $tgl_lahir,
             'jenis_kelamin' => $this->jenis_kelamin,

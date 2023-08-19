@@ -18,7 +18,7 @@ class KaryawanController extends Controller
     */
     public function index()
     {
-        $karyawan = Karyawan::query()->get();
+        $karyawan = Karyawan::orderBy('id_pegawai', 'asc')->get();
         return response()->json([
             'status' => true,
             'message' => 'Data Ditemukan',
@@ -49,6 +49,8 @@ class KaryawanController extends Controller
 
 
         $validate =  $request->validate([
+            'id_pegawai' => 'required|max:30',
+            'password' => 'required|max:255',
             'nama_karyawan' => 'required|max:50',
             'tgl_lahir' => 'required|date',
             'jenis_kelamin' => 'required|max:10',
@@ -66,6 +68,8 @@ class KaryawanController extends Controller
         }
 
         $karyawan = Karyawan::create([
+            'id_pegawai' => $request->id_pegawai,
+            'password' => $request->password,
             'nama_karyawan' => $request->nama_karyawan,
             'tgl_lahir' => $request->tgl_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
@@ -154,6 +158,8 @@ class KaryawanController extends Controller
 
         try {
             $validate = $request->validate([
+                'id_pegawai' => 'required|max:30',
+
                 'nama_karyawan' => 'required|max:50',
                 'tgl_lahir' => 'required|date',
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
@@ -167,6 +173,8 @@ class KaryawanController extends Controller
             ]);
 
             $data = [
+                'id_pegawai' => $request->id_pegawai,
+                'password' => $request->password,
                 'nama_karyawan' => $request->nama_karyawan,
                 'tgl_lahir' => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -179,7 +187,7 @@ class KaryawanController extends Controller
             if ($request->hasFile('gambar')) {
                 // Delete old image if exists
                 if ($karyawan->image) {
-                   $storage =  Storage::delete('photo_karyawan/' . $karyawan->image);
+                    $storage =  Storage::delete('photo_karyawan/' . $karyawan->image);
 
                 }
 

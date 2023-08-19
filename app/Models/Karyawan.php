@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 
 class Karyawan extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasApiTokens,HasFactory,SoftDeletes;
 
 
 
     protected $fillable = [
+        'id_pegawai',
+        'password',
         'nama_karyawan',
         'tgl_lahir',
         'jenis_kelamin',
