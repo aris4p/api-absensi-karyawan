@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AbsensiResource;
 use Carbon\Carbon;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
@@ -21,13 +22,15 @@ class AbsensiController extends Controller
         // dd($request->fromDate);
         $toDate = $request->toDate;
         // Melakukan query menggunakan Eloquent
-        $absensi = Absensi::whereBetween('jam_masuk', [$fromDate, $toDate])->get();
+        $absensi = Absensi::with('karyawan')->whereDate('jam_masuk', '>=', $fromDate)
+        ->whereDate('jam_masuk', '<=', $toDate)
+        ->get();
         // $absensi = Absensi::get();
 
         return response()->json([
             'status' => true,
             'message' => "Data Berhasil Didapatkan",
-            'data' => $absensi
+            'data' => AbsensiResource::collection($absensi),
         ]);
     }
 
@@ -58,8 +61,8 @@ class AbsensiController extends Controller
         // dd($request->all());
         $jam_masuk = Carbon::now()->format('Y-m-d H:i:s');
         $absensi = Absensi::where('karyawan_id', $request->karyawan_id)
-                    ->whereDate('jam_masuk', now())
-                    ->first();
+        ->whereDate('jam_masuk', now())
+        ->first();
         if($absensi){
             return response()->json([
                 'Anda sudah absen masuk'
@@ -142,6 +145,7 @@ class AbsensiController extends Controller
 
             if(!$absensi->jam_keluar){
                 $absensi->jam_keluar = $jam_keluar;
+                $absensi->keterangan = "Hadir";
                 $absensi->save();
 
                 return response()->json([
