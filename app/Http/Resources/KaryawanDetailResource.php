@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class KaryawanDetailResource extends JsonResource
@@ -26,7 +27,7 @@ class KaryawanDetailResource extends JsonResource
             'jenis_kelamin' => $this->jenis_kelamin,
             'alamat' => $this->alamat,
             'no_tlp' => $this->no_tlp,
-            'image' => $this->image,
+            'image' => asset('storage/photo_karyawan/'.$this->image),
             'status' => $this->status,
             'jabatan_id' => $this->jabatan_id,
             'jabatan' => $this->whenLoaded('jabatan'),

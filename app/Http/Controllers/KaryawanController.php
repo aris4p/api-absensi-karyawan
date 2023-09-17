@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\KaryawanResource;
 use App\Http\Resources\KaryawanDetailResource;
@@ -56,7 +57,7 @@ class KaryawanController extends Controller
             'jenis_kelamin' => 'required|max:10',
             'alamat' => 'required|max:100',
             'no_tlp' => 'required|numeric',
-            'gambar' => 'required|image|mimes:mimes:png,jpeg,gif|max:2048',
+            'gambar' => 'required|image|mimes:png,jpeg,gif|max:2048',
             'jabatan_id' => 'required|numeric',
             'status' => 'required',
         ]);
@@ -67,9 +68,11 @@ class KaryawanController extends Controller
             Storage::putFileAs('photo_karyawan', $request->gambar, $extension);
         }
 
+
+
         $karyawan = Karyawan::create([
             'id_pegawai' => $request->id_pegawai,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'nama_karyawan' => $request->nama_karyawan,
             'tgl_lahir' => $request->tgl_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
@@ -158,8 +161,6 @@ class KaryawanController extends Controller
 
         try {
             $validate = $request->validate([
-                'id_pegawai' => 'required|max:30',
-
                 'nama_karyawan' => 'required|max:50',
                 'tgl_lahir' => 'required|date',
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
@@ -173,8 +174,7 @@ class KaryawanController extends Controller
             ]);
 
             $data = [
-                'id_pegawai' => $request->id_pegawai,
-                'password' => $request->password,
+
                 'nama_karyawan' => $request->nama_karyawan,
                 'tgl_lahir' => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,

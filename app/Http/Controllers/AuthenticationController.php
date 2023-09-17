@@ -18,38 +18,38 @@ class AuthenticationController extends Controller
     {
 
         $request->validate([
-            'credential' => 'required', // Menggunakan field 'credential' untuk menerima username atau email
+            'email' => 'required', // Menggunakan field 'email' untuk menerima username atau email
             'password' => 'required'
         ]);
 
-        $type = filter_var($request->credential, FILTER_VALIDATE_EMAIL) ? 'email' : 'id_pegawai';
+        $type = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'id_pegawai';
 
         switch ($type) {
             case 'email':
-                $user = User::where('email', $request->credential)->first();
+                $user = User::where('email', $request->email)->first();
                 if ($user && Hash::check($request->password, $user->password)) {
                     $model = $user;
                 } else {
                     throw ValidationException::withMessages([
-                        'credential' => ['Email atau password salah'],
+                        'email' => ['Email atau password salah'],
                     ]);
                 }
                 break;
 
                 case 'id_pegawai':
-                    $karyawan = Karyawan::where('id_pegawai', $request->credential)->first();
+                    $karyawan = Karyawan::where('id_pegawai', $request->email)->first();
                     if ($karyawan && Hash::check($request->password, $karyawan->password)) {
                         $model = $karyawan;
                     } else {
                         throw ValidationException::withMessages([
-                            'credential' => ['ID Pegawai atau password salah'],
+                            'email' => ['ID Pegawai atau password salah'],
                         ]);
                     }
                     break;
 
                     default:
                     throw ValidationException::withMessages([
-                        'credential' => ['Format input tidak valid'],
+                        'email' => ['Format input tidak valid'],
                     ]);
                     break;
                 }
