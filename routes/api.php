@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KaryawanController;
 
-//login
-Route::post('login', [AuthenticationController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+    //login
+    Route::post('login', [AuthenticationController::class, 'login']);
+
+
+
+Route::middleware(['cors','auth:sanctum'])->group(function () {
 
     //user
     Route::get('/user', [AuthenticationController::class, 'user']);
