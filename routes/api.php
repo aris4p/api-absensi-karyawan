@@ -13,7 +13,7 @@ use App\Http\Controllers\KaryawanController;
 
 
 
-Route::middleware(['cors','auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     //user
     Route::get('/user', [AuthenticationController::class, 'user']);
