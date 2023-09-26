@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Resources\UserDetailResource;
 use Exception;
 use App\Models\User;
 use App\Models\Karyawan;
@@ -71,10 +71,11 @@ class AuthenticationController extends Controller
                 try {
                     $user = Auth::user();
 
+
                     if ($user) {
                         return response()->json([
                             'status' => true,
-                            'data' => $user,
+                            'data' =>  new UserDetailResource($user),
                         ]);
                     } else {
                         return response()->json([

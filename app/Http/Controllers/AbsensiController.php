@@ -104,9 +104,16 @@ class AbsensiController extends Controller
         * @param  \App\Models\Absensi  $absensi
         * @return \Illuminate\Http\Response
         */
-        public function show(Absensi $absensi)
+        public function show($id)
         {
-            //
+            $formattedDate = now()->format('Y-m-d');
+
+            $absensi = Absensi::where('karyawan_id', $id)
+                ->whereDate('jam_masuk', $formattedDate)
+                ->orderBy('jam_masuk', 'desc')
+                ->first();
+
+            return response()->json(['data' => $absensi]);
         }
 
         /**

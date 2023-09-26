@@ -9,7 +9,7 @@ use App\Http\Controllers\KaryawanController;
 
 
     //login
-    Route::post('login', [AuthenticationController::class, 'login']);
+Route::post('login', [AuthenticationController::class, 'login']);
 
 
 
@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //absensi
     Route::get('/absensi', [AbsensiController::class, 'index']);
+    Route::get('/absensi/{id}', [AbsensiController::class, 'show']);
     Route::post('/absensi', [AbsensiController::class, 'store']);
     Route::patch('/absensi', [AbsensiController::class, 'update']);
 
