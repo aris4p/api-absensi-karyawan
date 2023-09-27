@@ -65,7 +65,7 @@ class AbsensiController extends Controller
         ->first();
         if($absensi){
             return response()->json([
-                'Anda sudah absen masuk'
+                'message' => "Anda sudah absen masuk"
             ]);
         }
 
@@ -92,7 +92,7 @@ class AbsensiController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => "Data Berhasil Didapatkan",
+                'message' => "Absen masuk berhasil",
                 'data' => $absensi
             ]);
 
@@ -145,7 +145,7 @@ class AbsensiController extends Controller
             ->first();
             if(!$absensi){
                 return response()->json([
-                    'Anda belum absen masuk, silahkan absen masuk terlebih dahulu'
+                    'message' => 'Anda belum absen masuk, silahkan absen masuk terlebih dahulu'
                 ]);
 
             }
@@ -156,11 +156,11 @@ class AbsensiController extends Controller
                 $absensi->save();
 
                 return response()->json([
-                    "Absen keluar berhasil pada jam $jam_keluar"
+                   'message' => "Absen keluar berhasil"
                 ]);
             }else{
                 return response()->json([
-                    "Anda Sudah Absen Keluar pada jam $absensi->jam_keluar"
+                   'message' => "Anda Sudah Absen Keluar"
                 ]);
             }
 
