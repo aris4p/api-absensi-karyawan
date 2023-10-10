@@ -11,12 +11,13 @@ use App\Http\Controllers\KaryawanController;
     //login
 Route::post('login', [AuthenticationController::class, 'login']);
 
-
+Route::get('/user/{id}', [AuthenticationController::class, 'findUserId']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
     //user
     Route::get('/user', [AuthenticationController::class, 'user']);
+
     // karyawawan
     Route::get('/karyawan', [KaryawanController::class, 'index']);
     Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
